@@ -138,7 +138,7 @@ class _data_tesState extends State<data_tes> with WidgetsBindingObserver {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        data['bank']!,
+                        data['bank'] ?? "-",
                         textAlign: TextAlign.center,
                       ),
                       Container(
