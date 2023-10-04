@@ -16,7 +16,13 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
-  late List<Item> itemList;
+  List<Item> itemList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    updateListView();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +43,9 @@ class HomeState extends State<Home> {
               child: const Text("Tambah Item"),
               onPressed: () async {
                 var item = await navigateToEntryForm(context, null);
+
+                if (item == null) return;
+
                 //TODO 2 Panggil Fungsi untuk Insert ke DB
                 int result = await dbHelper.insert(item);
                 if (result > 0) {
@@ -50,10 +59,11 @@ class HomeState extends State<Home> {
     );
   }
 
-  Future<Item> navigateToEntryForm(BuildContext context, Item? item) async {
+  Future<Item?> navigateToEntryForm(BuildContext context, Item? item) async {
     var result = await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return EntryForm(item!);
+      return EntryForm(item);
     }));
+
     return result;
   }
 
@@ -62,6 +72,8 @@ class HomeState extends State<Home> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int index) {
+        final item = itemList[index];
+
         return Card(
           color: Colors.white,
           elevation: 2.0,
@@ -71,19 +83,23 @@ class HomeState extends State<Home> {
               child: Icon(Icons.ad_units),
             ),
             title: Text(
-              itemList[index].name,
+              item.name,
               style: textStyle,
             ),
-            subtitle: Text(itemList[index].price.toString()),
+            subtitle: Text(item.price.toString()),
             trailing: GestureDetector(
               child: const Icon(Icons.delete),
               onTap: () async {
-                //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
+                await dbHelper.delete(item.id);
+                updateListView();
               },
             ),
             onTap: () async {
-              var item = await navigateToEntryForm(context, itemList[index]);
-              //TODO 4 Panggil Fungsi untuk Edit data
+              var newItem = await navigateToEntryForm(context, item);
+              if (newItem != null) {
+                await dbHelper.update(newItem);
+              }
+              updateListView();
             },
           ),
         );

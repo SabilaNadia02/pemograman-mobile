@@ -40,6 +40,7 @@ class DbHelper {
 
 //create databases
   Future<int> insert(Item object) async {
+    print("insert dbhelper dipanggil");
     Database db = await initDb();
     int count = await db.insert('item', object.toMap());
     return count;
@@ -64,10 +65,12 @@ class DbHelper {
 
     int count = itemMapList.length;
 
-    List<Item> itemList = List<Item>.from(itemMapList.map((itemMap) => Item.fromMap(itemMap)));
+    List<Item> itemList = [];
+
     for (int i = 0; i < count; i++) {
       itemList.add(Item.fromMap(itemMapList[i]));
     }
+
     return itemList;
   }
 

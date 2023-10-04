@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:database_sqlite/models/item.dart';
 
 class EntryForm extends StatefulWidget {
-  final Item item;
+  final Item? item;
   const EntryForm(this.item, {super.key});
   @override
   EntryFormState createState() => EntryFormState(item);
@@ -10,15 +10,17 @@ class EntryForm extends StatefulWidget {
 
 //class controller
 class EntryFormState extends State<EntryForm> {
-  Item item;
+  Item? item;
+
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     //kondisi
-    nameController.text = item.name;
-    priceController.text = item.price.toString();
+    nameController.text = item?.name ?? '';
+    priceController.text = (item?.price ?? 0).toString();
+
     //rubah
     return Scaffold(
       appBar: AppBar(
@@ -86,8 +88,8 @@ class EntryFormState extends State<EntryForm> {
                           item = Item(nameController.text, int.parse(priceController.text));
                         } else {
                           // ubah data
-                          item.name = nameController.text;
-                          item.price = int.parse(priceController.text);
+                          item!.name = nameController.text;
+                          item!.price = int.parse(priceController.text);
                         }
                         // kembali ke layar sebelumnya dengan membawa objek item
                         Navigator.pop(context, item);

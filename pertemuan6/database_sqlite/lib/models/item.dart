@@ -5,9 +5,9 @@ class Item {
   int? _price;
 
 // membuat getter dan setter untuk masing-masing var
-  int get id => id;
+  int get id => _id ?? 0;
 
-  String get name => name;
+  String get name => _name ?? ' ';
   set name(String value) => _name = value;
 
   get price => _price;
