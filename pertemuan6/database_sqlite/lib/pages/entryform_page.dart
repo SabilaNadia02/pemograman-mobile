@@ -15,11 +15,14 @@ class EntryFormState extends State<EntryForm> {
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController stokController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     //kondisi
     nameController.text = item?.name ?? '';
     priceController.text = (item?.price ?? 0).toString();
+    stokController.text = (item?.stok ?? 0).toString();
 
     //rubah
     return Scaffold(
@@ -65,6 +68,22 @@ class EntryFormState extends State<EntryForm> {
                 },
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: TextField(
+                controller: stokController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Stok',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  //
+                },
+              ),
+            ),
             // tombol button
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -85,7 +104,8 @@ class EntryFormState extends State<EntryForm> {
                       onPressed: () {
                         if (item == null) {
                           // tambah data
-                          item = Item(nameController.text, int.parse(priceController.text));
+                          item = Item(
+                              nameController.text, int.parse(priceController.text), int.parse(stokController.text));
                         } else {
                           // ubah data
                           item!.name = nameController.text;

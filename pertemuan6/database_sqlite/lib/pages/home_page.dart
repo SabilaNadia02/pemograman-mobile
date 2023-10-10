@@ -86,7 +86,14 @@ class HomeState extends State<Home> {
               item.name,
               style: textStyle,
             ),
-            subtitle: Text(item.price.toString()),
+            subtitle: Column(
+              //mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.price.toString()),
+                Text(item.stok.toString()),
+              ],
+            ),
             trailing: GestureDetector(
               child: const Icon(Icons.delete),
               onTap: () async {
