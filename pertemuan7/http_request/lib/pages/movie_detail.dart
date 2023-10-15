@@ -3,7 +3,7 @@ import 'package:http_request/models/movie.dart';
 
 class MovieDetail extends StatelessWidget {
   final Movie movie;
-  final String imgPath = 'https://image.tmbd.org/t/p/w500/';
+  final String imgPath = 'https://image.tmdb.org/t/p/w500/';
 
   const MovieDetail(this.movie, {super.key});
 
@@ -13,7 +13,8 @@ class MovieDetail extends StatelessWidget {
     if (movie.posterPath != null) {
       path = imgPath + movie.posterPath;
     } else {
-      path = 'https://images.freeimages.com/images/large-previews/5eb/movie-clapboard-1184339.jpg';
+      path =
+          'https://images.freeimages.com/images/large-previews/5eb/movie-clapboard-1184339.jpg';
     }
     double height = MediaQuery.of(context).size.height;
     return Scaffold(

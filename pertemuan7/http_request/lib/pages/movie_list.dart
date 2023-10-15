@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http_request/service/http_service.dart';
 import 'package:http_request/pages/movie_detail.dart';
+import 'package:http_request/service/http_service.dart';
 
 class MovieList extends StatefulWidget {
   const MovieList({super.key});
@@ -16,10 +16,10 @@ class _MovieListState extends State<MovieList> {
 
   Future initialize() async {
     movies = [];
-    movies = await service.getPopularMovies();
+    movies = await service?.getPopularMovies();
     setState(
       () {
-        moviesCount = movies.length;
+        moviesCount = movies?.length;
         movies = movies;
       },
     );
@@ -54,13 +54,13 @@ class _MovieListState extends State<MovieList> {
             color: Colors.white,
             elevation: 2.0,
             child: ListTile(
-              title: Text(movies[position].title),
-              subtitle: const Text(
-                'Rating = movies[position].voteAverage.toString()',
+              title: Text(movies?[position].title),
+              subtitle: Text(
+                'Rating = ${movies?[position].voteAverage}',
               ),
               onTap: () {
                 MaterialPageRoute route = MaterialPageRoute(
-                  builder: (_) => MovieDetail(movies[position]),
+                  builder: (_) => MovieDetail(movies?[position]),
                 );
                 Navigator.push(context, route);
               },
